@@ -13,6 +13,7 @@
 		9641D3571B8CAE46005461D2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9641D3561B8CAE46005461D2 /* Images.xcassets */; };
 		9641D35A1B8CAE46005461D2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9641D3581B8CAE46005461D2 /* LaunchScreen.xib */; };
 		9641D3661B8CAE46005461D2 /* swift_weatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641D3651B8CAE46005461D2 /* swift_weatherTests.swift */; };
+		9641D3701B8CB7C1005461D2 /* sunny.png in Resources */ = {isa = PBXBuildFile; fileRef = 9641D36F1B8CB7C1005461D2 /* sunny.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		9641D35F1B8CAE46005461D2 /* swift weatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "swift weatherTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9641D3641B8CAE46005461D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9641D3651B8CAE46005461D2 /* swift_weatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swift_weatherTests.swift; sourceTree = "<group>"; };
+		9641D36F1B8CB7C1005461D2 /* sunny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunny.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				9641D3511B8CAE46005461D2 /* ViewController.swift */,
 				9641D3531B8CAE46005461D2 /* Main.storyboard */,
 				9641D3561B8CAE46005461D2 /* Images.xcassets */,
+				9641D36F1B8CB7C1005461D2 /* sunny.png */,
 				9641D3581B8CAE46005461D2 /* LaunchScreen.xib */,
 				9641D34D1B8CAE46005461D2 /* Supporting Files */,
 			);
@@ -193,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9641D3551B8CAE46005461D2 /* Main.storyboard in Resources */,
+				9641D3701B8CB7C1005461D2 /* sunny.png in Resources */,
 				9641D35A1B8CAE46005461D2 /* LaunchScreen.xib in Resources */,
 				9641D3571B8CAE46005461D2 /* Images.xcassets in Resources */,
 			);
