@@ -9,5 +9,5 @@
 #ifndef swift_weather_objective_c_bridging_header_h
 #define swift_weather_objective_c_bridging_header_h
 
-
+#import <AFNetworking/AFNetworking.h>
 #endif
