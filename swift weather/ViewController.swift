@@ -55,7 +55,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             println(location.coordinate.latitude)  //纬度
             println(location.coordinate.longitude)  //经度
         
-            self.updateWeatherInfo(location.coordinate.latitude, longitude:location.coordinate.longitude)
+            self.updateWeatherInfo(location.coordinate.latitude, longitude:-location.coordinate.longitude)
             
 //            self.updateWeatherInfo(39.39, longitude:116.38)
             
