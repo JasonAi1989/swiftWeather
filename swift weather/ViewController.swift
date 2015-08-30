@@ -11,6 +11,10 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
+
+    @IBOutlet weak var atNight: UILabel!
+    @IBOutlet weak var currentTime: UILabel!
+    @IBOutlet weak var des: UILabel!
     @IBOutlet weak var city: UILabel!
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var tempera: UILabel!
@@ -19,6 +23,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
         
         locationManager.delegate = self
         
@@ -79,9 +84,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func updateUIInfo(jsonResult:NSDictionary!)
     {
-        self.city.text = jsonResult["name"] as? String
+        //update the city
+        var city = jsonResult["name"] as? String
+        var country = jsonResult["sys"]?["country"] as? String
+        self.city.text = "\(city!) in \(country!)"
         
-        
+        //update the temperature
         if let temperature = jsonResult["main"]?["temp"] as? Double
         {
             var tempResult:Double
@@ -93,11 +101,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             self.tempera.text = "Get temperature fail!"
         }
        
-        var weatherId = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["id"] as! Int
+        //update the weather icon
+        var icon = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["icon"] as! String
+        self.icon.image = UIImage(named: icon)
         
-        println(weatherId)
+        //update the description
+        self.des.text = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["description"] as? String
         
-        self.updateWeatherID(weatherId)
+        var UnixDate = jsonResult["dt"] as? NSTimeInterval
+        var date = NSDate(timeIntervalSince1970: UnixDate!).description.componentsSeparatedByString(" +")[0]
+        self.currentTime.text = date
+        
+        //update the day and night information
+        var currentTime = jsonResult["dt"] as! Int
+        var sunrise = jsonResult["sys"]?["sunrise"] as! Int
+        var sunset = jsonResult["sys"]?["sunset"] as! Int
+        if currentTime < sunrise || currentTime > sunset
+        {
+            self.atNight.text = "Night"
+        }
+        else
+        {
+            self.atNight.text = "Day"
+        }
+        
+        
     }
     
     func updateWeatherID(weatherId:Int)
