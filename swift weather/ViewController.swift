@@ -11,8 +11,6 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
-
-    @IBOutlet weak var atNight: UILabel!
     @IBOutlet weak var currentTime: UILabel!
     @IBOutlet weak var des: UILabel!
     @IBOutlet weak var city: UILabel!
@@ -24,6 +22,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        let background = UIImage(named: "background")
+        self.view.backgroundColor = UIColor(patternImage: background!)
         
         locationManager.delegate = self
         
@@ -56,6 +56,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             println(location.coordinate.longitude)  //经度
         
             self.updateWeatherInfo(location.coordinate.latitude, longitude:location.coordinate.longitude)
+            
+//            self.updateWeatherInfo(39.39, longitude:116.38)
             
             locationManager.stopUpdatingLocation() //关闭坐标更新，不然会一直回调此函数？
         }
@@ -106,52 +108,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.icon.image = UIImage(named: icon)
         
         //update the description
-        self.des.text = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["description"] as? String
+        var des = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["description"] as? String
+        var main_des = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["main"] as? String
+        self.des.text = "\(des!)|\(main_des!)"
         
+        //update the current time
         var UnixDate = jsonResult["dt"] as? NSTimeInterval
-        var date = NSDate(timeIntervalSince1970: UnixDate!).description.componentsSeparatedByString(" +")[0]
-        self.currentTime.text = date
+        var dateFormat = NSDateFormatter()
         
-        //update the day and night information
-        var currentTime = jsonResult["dt"] as! Int
-        var sunrise = jsonResult["sys"]?["sunrise"] as! Int
-        var sunset = jsonResult["sys"]?["sunset"] as! Int
-        if currentTime < sunrise || currentTime > sunset
-        {
-            self.atNight.text = "Night"
-        }
-        else
-        {
-            self.atNight.text = "Day"
-        }
+        var date = NSDate(timeIntervalSince1970: UnixDate!)
+        dateFormat.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        
+        var dateString = dateFormat.stringFromDate(date)
+ 
+        self.currentTime.text = "\(dateString)"
     }
-    
-    func updateWeatherID(weatherId:Int)
-    {
-        switch weatherId
-        {
-        case 200...232: //Thunderstorm
-            break
-        case 300...321: //Drizzle
-            break
-        case 500...531: //Rain
-            break
-        case 600...622: //Snow
-            break
-        case 701...781: //Atmosphere
-            break
-        case 800...804: //Clouds
-            break
-        case 900...906: //Extreme
-            break
-        case 950...962: //Additional
-            break
-        default:
-            break
-        }
-    }
-    
 }
 
