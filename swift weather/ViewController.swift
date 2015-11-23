@@ -38,7 +38,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func ios8() -> Bool{
-        var version = (UIDevice.currentDevice().systemVersion as NSString).floatValue
+        let version = (UIDevice.currentDevice().systemVersion as NSString).floatValue
         return version > 8
     }
 
@@ -47,13 +47,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
-        var location:CLLocation = locations[locations.count-1] as! CLLocation
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+        let location:CLLocation = locations[locations.count-1] 
         
         if location.horizontalAccuracy > 0
         {
-            println(location.coordinate.latitude)  //纬度
-            println(location.coordinate.longitude)  //经度
+            print(location.coordinate.latitude)  //纬度
+            print(location.coordinate.longitude)  //经度
         
             self.updateWeatherInfo(location.coordinate.latitude, longitude:-location.coordinate.longitude)
             
@@ -63,9 +63,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didFinishDeferredUpdatesWithError error: NSError!){
+    func locationManager(manager: CLLocationManager, didFinishDeferredUpdatesWithError error: NSError?){
         
-        println(error)
+        print(error)
     }
     
     func updateWeatherInfo(latitude: CLLocationDegrees, longitude: CLLocationDegrees)
@@ -75,11 +75,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let params = ["lat":latitude, "lon":longitude, "cnt":0]
         
         manager.GET(url, parameters: params, success: { (operation: AFHTTPRequestOperation, responseObject: AnyObject) -> Void in
-                println("JSON: " + responseObject.description)
+                print("JSON: " + responseObject.description)
 
                 self.updateUIInfo(responseObject as! NSDictionary)
             }, failure: {(operation:AFHTTPRequestOperation, error:NSError) -> Void in
-                println("get error!")
+                print("get error!")
         })
         
     }
@@ -87,8 +87,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func updateUIInfo(jsonResult:NSDictionary!)
     {
         //update the city
-        var city = jsonResult["name"] as? String
-        var country = jsonResult["sys"]?["country"] as? String
+        let city = jsonResult["name"] as? String
+        let country = jsonResult["sys"]?["country"] as? String
         self.city.text = "\(city!) in \(country!)"
         
         //update the temperature
@@ -104,22 +104,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
        
         //update the weather icon
-        var icon = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["icon"] as! String
+        let icon = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["icon"] as! String
         self.icon.image = UIImage(named: icon)
         
         //update the description
-        var des = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["description"] as? String
-        var main_des = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["main"] as? String
+        let des = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["description"] as? String
+        let main_des = ((jsonResult["weather"] as! NSArray)[0] as! NSDictionary)["main"] as? String
         self.des.text = "\(des!)|\(main_des!)"
         
         //update the current time
-        var UnixDate = jsonResult["dt"] as? NSTimeInterval
-        var dateFormat = NSDateFormatter()
+        let UnixDate = jsonResult["dt"] as? NSTimeInterval
+        let dateFormat = NSDateFormatter()
         
-        var date = NSDate(timeIntervalSince1970: UnixDate!)
+        let date = NSDate(timeIntervalSince1970: UnixDate!)
         dateFormat.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        var dateString = dateFormat.stringFromDate(date)
+        let dateString = dateFormat.stringFromDate(date)
  
         self.currentTime.text = "\(dateString)"
     }
